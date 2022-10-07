@@ -1,0 +1,7 @@
+﻿@model IEnumerable<Beatrix.Models.UserComment>
+
+@foreach (var x in Model)
+{
+    <p>@x.ID</p>
+    <p>@x.UserName</p>
+}
