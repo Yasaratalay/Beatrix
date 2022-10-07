@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Beatrix
 {
@@ -27,7 +28,7 @@ namespace Beatrix
         {
             services.AddControllersWithViews();
 
-            //Proje seviyesinde Authorize. Þuan hiçbir siteyi açamaz yetki olmadýðý için.
+            //Proje seviyesinde Authorize. Yetkisi olmadýðý zaman sayfalara eriþime izin vermez.
             services.AddMvc(config =>
             {
                 var policy = new AuthorizationPolicyBuilder()
@@ -35,6 +36,18 @@ namespace Beatrix
                     .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
+
+            services.AddMvc();
+
+            // Yetkisi olmayan bir sayfaya girmeye çalýþýrsa Login controller altýndaki Index action'a yönlendir.
+            services.AddAuthentication(
+                CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(x =>
+                {
+                    x.LoginPath = "/Login/Index";
+                });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +69,9 @@ namespace Beatrix
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+
+            app.UseAuthentication();
 
             app.UseRouting();
 
