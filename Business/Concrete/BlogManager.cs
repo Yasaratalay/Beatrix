@@ -20,24 +20,14 @@ namespace Business.Concrete
             _blogDal = blogDal;
         }
 
-        public void BlogAdd(Blog blog)
-        {
-            _blogDal.Insert(blog);
-        }
-
-        public void BlogDelete(Blog blog)
-        {
-            _blogDal.Delete(blog);
-        }
-
-        public void BlogUpdate(Blog blog)
-        {
-            _blogDal.Update(blog);
-        }
-
         public List<Blog> GetBlogListWithCategory()
         {
             return _blogDal.GetListWithCategory();
+        }
+
+        public List<Blog> GetListWithCategoryByWriterBlogManager(int id)
+        {
+            return _blogDal.GetListWithCategoryByWriter(id);
         }
 
         public List<Blog> GetList()
@@ -45,7 +35,12 @@ namespace Business.Concrete
             return _blogDal.GetListAll();
         }
 
-        public Blog GeyById(int id)
+        public List<Blog> GetLast3Blog()
+        {
+            return _blogDal.GetListAll().Take(3).ToList();
+        }
+
+        public Blog TGetById(int id)
         {
             return _blogDal.GetById(id);
         }
@@ -58,6 +53,21 @@ namespace Business.Concrete
         public List<Blog> GetBlogListByWriter(int id)
         {
             return _blogDal.GetListAll(x => x.WriterId == id);
+        }
+
+        public void TAdd(Blog t)
+        {
+            _blogDal.Insert(t);
+        }
+
+        public void TDelete(Blog t)
+        {
+            _blogDal.Delete(t);
+        }
+
+        public void TUpdate(Blog t)
+        {
+            _blogDal.Update(t);
         }
     }
 }
