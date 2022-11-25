@@ -17,11 +17,13 @@ namespace Beatrix.Controllers
     {
         BlogManager bm = new BlogManager(new EfBlogRepository());
         CategoryManager cm = new CategoryManager(new EfCategoryRepository());
+
         public IActionResult Index()
         {
             var values = bm.GetBlogListWithCategory();
             return View(values);
         }
+
         public IActionResult BlogReadAll(int id)
         {
             ViewBag.i = id;
@@ -35,6 +37,7 @@ namespace Beatrix.Controllers
             var values = bm.GetListWithCategoryByWriterBlogManager(1);
             return View(values);
         }
+
         [HttpGet]
         public IActionResult BlogAdd()
         {
@@ -78,12 +81,14 @@ namespace Beatrix.Controllers
             }
             return View();
         }
+
         public IActionResult DeleteBlog(int id) // id ye göre silme.
         {
             var blogValue = bm.TGetById(id); // silinecek veriyi bulma
             bm.TDelete(blogValue); // gönderdiğimiz id ye karşılık gelen veriyi sil
             return RedirectToAction("BlogListByWriter", "Blog");
         }
+
         [HttpGet] // Sayfa yüklendiği zaman verileri getir
         public IActionResult UpdateBlog(int id)
         {
@@ -98,6 +103,7 @@ namespace Beatrix.Controllers
             ViewBag.cv = categoryValue;
             return View(blogValue);
         }
+
         [HttpPost] // Post olduğu zaman çalışacak
         public IActionResult UpdateBlog(Blog b) // aynı isimde bir başka action varsa parametre almalı.
         {

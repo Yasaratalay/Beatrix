@@ -4,14 +4,16 @@ using DataAccess.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20221124114318_mig_teamtable")]
+    partial class mig_teamtable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -254,40 +256,6 @@ namespace DataAccess.Migrations
                     b.ToTable("Messages");
                 });
 
-            modelBuilder.Entity("Entity.Concrete.Message2", b =>
-                {
-                    b.Property<int>("MessageId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("MessageDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MessageDetails")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("MessageStatu")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("ReceiverId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SenderId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Subject")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("MessageId");
-
-                    b.HasIndex("ReceiverId");
-
-                    b.HasIndex("SenderId");
-
-                    b.ToTable("Message2s");
-                });
-
             modelBuilder.Entity("Entity.Concrete.NewsLetter", b =>
                 {
                     b.Property<int>("EmailId")
@@ -426,21 +394,6 @@ namespace DataAccess.Migrations
                     b.Navigation("HomeTeam");
                 });
 
-            modelBuilder.Entity("Entity.Concrete.Message2", b =>
-                {
-                    b.HasOne("Entity.Concrete.Writer", "ReceiverUser")
-                        .WithMany("WriterReceiver")
-                        .HasForeignKey("ReceiverId");
-
-                    b.HasOne("Entity.Concrete.Writer", "SenderUser")
-                        .WithMany("WriterSender")
-                        .HasForeignKey("SenderId");
-
-                    b.Navigation("ReceiverUser");
-
-                    b.Navigation("SenderUser");
-                });
-
             modelBuilder.Entity("Entity.Concrete.Blog", b =>
                 {
                     b.Navigation("Comments");
@@ -461,10 +414,6 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Entity.Concrete.Writer", b =>
                 {
                     b.Navigation("Blogs");
-
-                    b.Navigation("WriterReceiver");
-
-                    b.Navigation("WriterSender");
                 });
 #pragma warning restore 612, 618
         }

@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Abstract
+namespace DataAccess.Abstract
 {
-    public interface IWriterService: IGenericService<Writer>
+    public interface INotificationDal : IGenericDal<Notification>
     {
-        List<Writer> GetWriterById(int id);
     }
 }
